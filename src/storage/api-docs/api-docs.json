@@ -1,0 +1,881 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Test Interview",
+        "version": "0.1"
+    },
+    "paths": {
+        "/api/product/create": {
+            "post": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Product",
+                "requestBody": {
+                    "description": "Create Product For User",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "prod_name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "prod_name": "product4_store1_user1",
+                                    "sale_price": 90000,
+                                    "store_id": "fb643630-c194-4376-a807-a6de327f413d",
+                                    "variants": [
+                                        {
+                                            "name": "product4_variant1",
+                                            "price": 10000,
+                                            "quantity": 100
+                                        },
+                                        {
+                                            "name": "product4_variant2",
+                                            "price": 20000,
+                                            "quantity": 200
+                                        },
+                                        {
+                                            "name": "product4_variant3",
+                                            "price": 23000,
+                                            "quantity": 35
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Response Product Info when create successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "text"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Create Product Success",
+                                        "data": {
+                                            "prod_name": "product1_store1_user1",
+                                            "sale_price": 90000,
+                                            "store_id": "205bf0c3-505d-455f-9ca4-070ec3059dba",
+                                            "user_id": "28a71274-a32c-44c6-bfcb-0b3bf6f8b26a",
+                                            "id": "1f030bb1-2c62-46cd-af81-e0d6591fdcac",
+                                            "updated_at": "2021-08-07T09:56:20.000000Z",
+                                            "created_at": "2021-08-07T09:56:20.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/product": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get List Product Of User",
+                "description": "Returns List All Product Of User",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "current_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": "true",
+                                        "data": [
+                                            {
+                                                "id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0",
+                                                "prod_name": "product3_store1_user1",
+                                                "sale_price": "90000.00",
+                                                "store_id": "205bf0c3-505d-455f-9ca4-070ec3059dba",
+                                                "user_id": "28a71274-a32c-44c6-bfcb-0b3bf6f8b26a",
+                                                "created_at": "2021-08-07T09:59:36.000000Z",
+                                                "updated_at": "2021-08-07T09:59:36.000000Z",
+                                                "product_variants": [
+                                                    {
+                                                        "id": "11540bee-bfb5-4a96-bb9c-75625af93e3a",
+                                                        "name": "product3_variant2",
+                                                        "price": "20000.00",
+                                                        "quantity": 200,
+                                                        "prod_id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0"
+                                                    },
+                                                    {
+                                                        "id": "402d3ad6-733c-40f2-8b7d-32acbaeb2c75",
+                                                        "name": "product3_variant1",
+                                                        "price": "10000.00",
+                                                        "quantity": 100,
+                                                        "prod_id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0"
+                                                    },
+                                                    {
+                                                        "id": "a37cbfe7-11a0-4176-a10c-668702f97221",
+                                                        "name": "product3_variant3",
+                                                        "price": "23000.00",
+                                                        "quantity": 35,
+                                                        "prod_id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0"
+                                                    }
+                                                ]
+                                            }
+                                        ],
+                                        "pagination": {
+                                            "total": 3,
+                                            "per_page": 1,
+                                            "total_page": 2,
+                                            "current_page": 2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/product/{id}": {
+            "get": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Get Product Info by id",
+                "description": "Returns Product Info",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Get Product Info Success",
+                                        "data": {
+                                            "id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0",
+                                            "prod_name": "product3_store1_user1",
+                                            "sale_price": "90000.00",
+                                            "store_id": "205bf0c3-505d-455f-9ca4-070ec3059dba",
+                                            "user_id": "28a71274-a32c-44c6-bfcb-0b3bf6f8b26a",
+                                            "created_at": "2021-08-07T09:59:36.000000Z",
+                                            "updated_at": "2021-08-07T09:59:36.000000Z",
+                                            "product_variants": [
+                                                {
+                                                    "id": "11540bee-bfb5-4a96-bb9c-75625af93e3a",
+                                                    "name": "product3_variant2",
+                                                    "prod_id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0",
+                                                    "price": "20000.00",
+                                                    "quantity": 200,
+                                                    "created_at": "2021-08-07T09:59:36.000000Z",
+                                                    "updated_at": "2021-08-07T09:59:36.000000Z"
+                                                },
+                                                {
+                                                    "id": "402d3ad6-733c-40f2-8b7d-32acbaeb2c75",
+                                                    "name": "product3_variant1",
+                                                    "prod_id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0",
+                                                    "price": "10000.00",
+                                                    "quantity": 100,
+                                                    "created_at": "2021-08-07T09:59:36.000000Z",
+                                                    "updated_at": "2021-08-07T09:59:36.000000Z"
+                                                },
+                                                {
+                                                    "id": "a37cbfe7-11a0-4176-a10c-668702f97221",
+                                                    "name": "product3_variant3",
+                                                    "prod_id": "9a7462c2-7863-4d02-949f-b8c51ff23fc0",
+                                                    "price": "23000.00",
+                                                    "quantity": 35,
+                                                    "created_at": "2021-08-07T09:59:36.000000Z",
+                                                    "updated_at": "2021-08-07T09:59:36.000000Z"
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Delete Product ",
+                "description": "Returns boolean",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Delete Product Success",
+                                        "data": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/product/update/{id}": {
+            "put": {
+                "tags": [
+                    "Product"
+                ],
+                "summary": "Update Product Info ",
+                "description": "Returns boolean",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "prod_name": "product4_store1_user1",
+                                    "sale_price": 950000,
+                                    "store_id": "fb643630-c194-4376-a807-a6de327f413d",
+                                    "variants": [
+                                        {
+                                            "name": "product4_variant11",
+                                            "price": 15000,
+                                            "quantity": 100
+                                        },
+                                        {
+                                            "name": "product4_variant2",
+                                            "price": 25000,
+                                            "quantity": 200
+                                        },
+                                        {
+                                            "name": "product4_variant3",
+                                            "price": 15000,
+                                            "quantity": 35
+                                        },
+                                        {
+                                            "name": "product4_variant4",
+                                            "price": 5000,
+                                            "quantity": 150
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Update Product Info Success",
+                                        "data": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/store/create": {
+            "post": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Store",
+                "requestBody": {
+                    "description": "Create Store For User",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "store_name": {
+                                        "type": "email"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "store_name": "store1_user1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Response accesstoken when register successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "text"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Create Store Success",
+                                        "data": {
+                                            "store_name": "store1_user1",
+                                            "user_id": 1707329139315199,
+                                            "id": 1707329376694452,
+                                            "updated_at": "2021-08-06T07:49:36.000000Z",
+                                            "created_at": "2021-08-06T07:49:36.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/store": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get List All Store Of User",
+                "description": "Returns List All Store Of User",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    },
+                    {
+                        "name": "current_page",
+                        "in": "query",
+                        "schema": {
+                            "type": "number"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": "true",
+                                        "data": [
+                                            {
+                                                "id": "1707330796931053",
+                                                "store_name": "store3_user1",
+                                                "user_id": "1707329139315199",
+                                                "created_at": "2021-08-06T08:12:10.000000Z",
+                                                "updated_at": "2021-08-06T08:12:10.000000Z"
+                                            }
+                                        ],
+                                        "pagination": {
+                                            "total": 3,
+                                            "per_page": 1,
+                                            "total_page": 2,
+                                            "current_page": 2
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/store/{id}": {
+            "get": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Get Store Info by id",
+                "description": "Returns Store Info",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Get Info Store Success",
+                                        "data": {
+                                            "id": "1707330796931053",
+                                            "store_name": "store3_user1",
+                                            "user_id": "1707329139315199",
+                                            "created_at": "2021-08-06T08:12:10.000000Z",
+                                            "updated_at": "2021-08-06T08:12:10.000000Z"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Delete Store Info ",
+                "description": "Returns boolean",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Delete Store Info Success",
+                                        "data": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/store/update/{id}": {
+            "put": {
+                "tags": [
+                    "Store"
+                ],
+                "summary": "Update Store Info ",
+                "description": "Returns boolean",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "store_name": "store2_user1"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Update Store Info Success",
+                                        "data": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "requestBody": {
+                    "description": "Please use info to login for test\n *                      User1: email :user1@gmail.com, password:123456",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "user1@gmail.com",
+                                    "password": "123456"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Response accesstoken when login successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "text"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": "true",
+                                        "data": {
+                                            "token": "access token string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register",
+                "requestBody": {
+                    "description": "Regitser user for app",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "type": "email"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    },
+                                    "full_name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object",
+                                "example": {
+                                    "email": "user3@gmail.com",
+                                    "password": "123456",
+                                    "full_name": "User3"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Response accesstoken when register successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        },
+                                        "data": {
+                                            "type": "text"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": "true",
+                                        "data": {
+                                            "token": "access token string",
+                                            "expire_time": "Expire time of token"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user/info": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get User Info",
+                "description": "Returns Info User",
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": "true",
+                                        "data": [
+                                            {
+                                                "id": 1707272528510428,
+                                                "full_name": "User5",
+                                                "email": "user5@gmail.com",
+                                                "role": "user"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user/update": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update Info Account",
+                "description": "Returns boolean",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "example": {
+                                    "email": "user5@gmail.com",
+                                    "password": 456789,
+                                    "full_name": "User5"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "status": true,
+                                        "message": "Update Info User Success",
+                                        "data": ""
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "type": "apiKey",
+                "description": "Bearer",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

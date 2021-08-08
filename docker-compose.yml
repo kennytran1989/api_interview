@@ -1,0 +1,62 @@
+version: '3'
+services:
+
+  # The Database
+  database:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: database
+    environment:
+      MYSQL_DATABASE: db_interview
+      MYSQL_USER: interview
+      MYSQL_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+        - "3306:3306"
+    volumes:
+      - ./docker/mysql/dbdata:/var/lib/mysql/
+      - ./docker/mysql/my.cnf:/etc/mysql/my.cn
+
+  # The Application
+  php-app:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile
+    working_dir: /var/www/
+    container_name: php-app
+    depends_on:
+      - database
+    volumes:
+      - ./src/:/var/www/
+      - ./docker/nginx/local.ini:/usr/local/etc/php/conf.d/local.ini
+      - ./docker/entrypoint.sh:/entrypoint.sh
+    command: bash -c "chmod +x /entrypoint.sh && /entrypoint.sh"
+
+  # The Web Server
+  web-nginx:
+    image: nginx:1.18
+    container_name: web-nginx
+    restart: always
+    depends_on:
+      - php-app
+      # - composer
+    volumes: 
+      - ./src/:/var/www/
+      - ./docker/nginx/vhost.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - 80:80
+      - 443:443
+
+  # Composer
+  # composer:
+  #   container_name: composer
+  #   image: composer:1.8
+  #   volumes:
+  #     - "./src:/app"
+  #   working_dir: "/app"
+  #   command: composer install --ignore-platform-reqs
+
+volumes:
+  dbdata:
+    driver: local
+
